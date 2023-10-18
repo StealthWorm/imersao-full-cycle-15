@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+
 	"github.com/codeedu/imersao/codepix-go/domain/model"
 	"github.com/jinzhu/gorm"
 )
@@ -36,6 +37,7 @@ func (r PixKeyRepositoryDb) RegisterKey(pixKey *model.PixKey) (*model.PixKey, er
 
 func (r PixKeyRepositoryDb) FindKeyByKind(key string, kind string) (*model.PixKey, error) {
 	var pixKey model.PixKey
+	//preload pega dados de outras tabelas para compor o resultado
 	r.Db.Preload("Account.Bank").First(&pixKey, "kind = ? and key = ?", kind, key)
 
 	if pixKey.ID == "" {
