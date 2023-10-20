@@ -12,6 +12,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FixturesModule } from './fixtures/fixtures.module';
 import { ConsoleModule } from 'nestjs-console';
 
+// decorator, um estilo de arquitetura do software
 @Module({
   imports: [
     ConfigModule.forRoot({

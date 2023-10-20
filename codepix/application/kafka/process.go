@@ -1,14 +1,16 @@
+// este arquivo vai ser responsavel por ficar consumindo o kafka e demais processamentos de mensagem
 package kafka
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/codeedu/imersao/codepix-go/application/factory"
 	appmodel "github.com/codeedu/imersao/codepix-go/application/model"
 	"github.com/codeedu/imersao/codepix-go/application/usecase"
 	"github.com/codeedu/imersao/codepix-go/domain/model"
 	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/jinzhu/gorm"
-	"os"
 )
 
 type KafkaProcessor struct {
@@ -26,6 +28,7 @@ func NewKafkaProcessor(database *gorm.DB, producer *ckafka.Producer, deliveryCha
 }
 
 func (k *KafkaProcessor) Consume() {
+	//conexão no servidor
 	configMap := &ckafka.ConfigMap{
 		"bootstrap.servers": os.Getenv("kafkaBootstrapServers"),
 		"group.id":          os.Getenv("kafkaConsumerGroupId"),
@@ -37,10 +40,13 @@ func (k *KafkaProcessor) Consume() {
 		panic(err)
 	}
 
+	//escutando os tópicos
 	topics := []string{os.Getenv("kafkaTransactionTopic"), os.Getenv("kafkaTransactionConfirmationTopic")}
 	c.SubscribeTopics(topics, nil)
 
 	fmt.Println("kafka consumer has been started")
+
+	//cada menssagem recebida envia para o processMessage
 	for {
 		msg, err := c.ReadMessage(-1)
 		if err == nil {
@@ -71,6 +77,7 @@ func (k *KafkaProcessor) processTransaction(msg *ckafka.Message) error {
 		return err
 	}
 
+	//instancia a factory, evitando repetição das declarações
 	transactionUseCase := factory.TransactionUseCaseFactory(k.Database)
 
 	createdTransaction, err := transactionUseCase.Register(
@@ -95,6 +102,7 @@ func (k *KafkaProcessor) processTransaction(msg *ckafka.Message) error {
 		return err
 	}
 
+	//publica no tópico do kafka
 	err = Publish(string(transactionJson), topic, k.Producer, k.DeliveryChan)
 	if err != nil {
 		return err

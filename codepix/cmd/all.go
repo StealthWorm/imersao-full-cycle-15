@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,12 +16,13 @@ limitations under the License.
 package cmd
 
 import (
+	"os"
+
 	"github.com/codeedu/imersao/codepix-go/application/grpc"
 	"github.com/codeedu/imersao/codepix-go/application/kafka"
 	"github.com/codeedu/imersao/codepix-go/infrastructure/db"
 	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/spf13/cobra"
-	"os"
 )
 
 var (
@@ -35,6 +36,7 @@ var allCmd = &cobra.Command{
 
 	Run: func(cmd *cobra.Command, args []string) {
 		database := db.ConnectDB(os.Getenv("env"))
+		// o comando "go" na frente cria uma nova thread de execução, tornando mais facil de executar processos simultaneos, sem a necessidade de isntaciar WebWorkers
 		go grpc.StartGrpcServer(database, portNumber)
 
 		deliveryChan := make(chan ckafka.Event)
@@ -47,7 +49,7 @@ var allCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(allCmd)
-	allCmd.Flags().IntVarP(&gRPCPortNumber, "grpc-port","p", 500051,"gRPC Port")
+	allCmd.Flags().IntVarP(&gRPCPortNumber, "grpc-port", "p", 500051, "gRPC Port")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

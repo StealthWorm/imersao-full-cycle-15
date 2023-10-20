@@ -35,7 +35,7 @@ export class TransactionsService {
     const transaction = await this.dataSource.transaction(async (manager) => {
       const bankAccount = await manager.findOneOrFail(BankAccount, {
         where: { id: bankAccountId },
-        lock: { mode: 'pessimistic_write' },
+        lock: { mode: 'pessimistic_write' }, //permite-nos obter um bloqueio exclusivo e evitar que os dados sejam lidos, atualizados ou eliminados.
       });
 
       const transaction = manager.create(Transaction, {

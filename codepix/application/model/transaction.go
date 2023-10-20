@@ -3,6 +3,7 @@ package model
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/go-playground/validator/v10"
 )
 
@@ -28,6 +29,7 @@ func (t *Transaction) isValid() error {
 }
 
 func (t *Transaction) ParseJson(data []byte) error {
+	//Unmarshal é como um mapper de dados para efetuar parse entre tipos diferentes de dados
 	err := json.Unmarshal(data, t)
 	if err != nil {
 		return err
