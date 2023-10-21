@@ -12,12 +12,12 @@ import StarBorder from "@mui/icons-material/StarBorder";
 export async function getPixKeys(bankAccountId: string): Promise<PixKey[]> {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_NEST_API_URL}/bank-accounts/${bankAccountId}/pix-keys`,
-    {
+        {
       next: {
         tags: [`pix-keys-${bankAccountId}`],
       },
     }
-  ); //cache sob demanda
+  ); //cache sob demanda -> (ao inves de usar o "revalidate", opta por uma diretiva que verifica se existe uma nova chave pix, por isso "sob demanda")
   return response.json();
 }
 

@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 export async function getBankAccounts(): Promise<BankAccount[]> {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_NEST_API_URL}/bank-accounts`,
-    {
+        {
       next: {
         revalidate: 10,
       },

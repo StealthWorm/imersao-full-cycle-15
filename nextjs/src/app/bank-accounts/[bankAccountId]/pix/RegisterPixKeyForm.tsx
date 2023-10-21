@@ -25,10 +25,25 @@ export function RegisterPixKeyForm({
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+
+  // o método .bind() é usado para criar uma nova função que tem um valor específico como seu contexto 
+  // (ou valor this). Isso é útil quando você deseja garantir que uma função seja executada com um contexto 
+  // específico, independentemente de como ela seja chamada.
+  //  no caso estamos carregando o createPixKeyActionsomente com o Id primeiro, e depois o chamamos apenas com o formData
   const createPixKeyActionWithBankAccountId = createPixKeyAction.bind(
     null,
     bankAccountId
   );
+  // const objeto = {
+  //   valor: 42,
+  //   mostrarValor: function() {
+  //     console.log(this.valor);
+  //   }
+  // };
+  // const outraFuncao = objeto.mostrarValor;
+  // const funcaoVinculada = outraFuncao.bind(objeto);
+  // outraFuncao(); // Isso resultará em "undefined" porque 'this' não está definido.
+  // funcaoVinculada(); // Isso resultará em "42" porque 'this' está vinculado ao objeto
 
   async function onSubmit(formData: FormData) {
     await createPixKeyActionWithBankAccountId(formData);

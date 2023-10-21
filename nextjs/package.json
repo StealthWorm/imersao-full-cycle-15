@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "001:dev": "NEXT_PUBLIC_BANK_CODE=001 NEXT_PUBLIC_BANK_NAME=BBX NEXT_PUBLIC_NEST_API_URL=http://host.docker.internal:3000 next dev -p 3000",
-    "002:dev": "NEXT_PUBLIC_BANK_CODE=002 NEXT_PUBLIC_BANK_NAME=CTER NEXT_PUBLIC_NEST_API_URL=http://host.docker.internal:3001 next dev -p 3001"
+    "001:dev": "cross-env NEXT_PUBLIC_BANK_CODE=001 NEXT_PUBLIC_BANK_NAME=BBX NEXT_PUBLIC_NEST_API_URL=http://host.docker.internal:3002 next dev -p 3002",
+    "002:dev": "cross-env NEXT_PUBLIC_BANK_CODE=002 NEXT_PUBLIC_BANK_NAME=CTER NEXT_PUBLIC_NEST_API_URL=http://host.docker.internal:3003 next dev -p 3003"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
@@ -17,14 +17,17 @@
     "@mui/icons-material": "^5.14.13",
     "@mui/material": "^5.14.13",
     "@mui/x-data-grid": "^6.16.2",
-    "@types/node": "20.8.6",
-    "@types/react": "18.2.28",
     "@types/react-dom": "18.2.13",
     "eslint": "8.51.0",
     "eslint-config-next": "13.5.4",
     "next": "13.5.4",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.8.7",
+    "@types/react": "18.2.31",
+    "cross-env": "^7.0.3",
     "typescript": "5.2.2"
   }
 }

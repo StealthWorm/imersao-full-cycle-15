@@ -10,6 +10,7 @@ export async function NavbarBankAccount({
   bankAccountId: string;
 }) {
   const bankAccount = await getBankAccount(bankAccountId);
+  
   return (
     <Box>
       <Chip
@@ -30,6 +31,7 @@ export async function NavbarBankAccount({
       <form
         action={async () => {
           "use server";
+          //* método executado no back para deletar o cookie da seesao e redirecionar
           cookies().delete("bankAccountId");
           redirect("/");
         }}

@@ -5,7 +5,7 @@ const nextConfig = {
       ? `.${process.env.NEXT_PUBLIC_BANK_CODE}-next`
       : ".next",
   experimental: {
-    serverActions: true,
+    serverActions: true, //actions do lado servidor (mutations), propagação de alteração dos componentes que vão causar rerenderizações de forma instantanea, geranciado pelo next
   },
   async redirects() {
     return [

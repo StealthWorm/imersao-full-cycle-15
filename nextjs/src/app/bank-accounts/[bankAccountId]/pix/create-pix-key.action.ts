@@ -10,7 +10,7 @@ export async function createPixKeyAction(
   const pixKeyKey = formData.get("key");
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_NEST_API_URL}/bank-accounts/${bankAccountId}/pix-keys`,
-    {
+        {
       method: "POST",
       body: JSON.stringify({
         kind: pixKeyKind,

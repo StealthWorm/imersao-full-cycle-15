@@ -6,7 +6,8 @@ export type CurrentBalanceProps = {
 };
 
 export async function CurrentBalance(props: CurrentBalanceProps) {
-  const bankAccount = await getBankAccount(props.bankAccountId);
+  // foi criado uma query na pasta queries para isolar a chamada na API, evitando repetições
+   const bankAccount = await getBankAccount(props.bankAccountId);
 
   return (
     <Box display={"flex"} flexDirection={"row"}>

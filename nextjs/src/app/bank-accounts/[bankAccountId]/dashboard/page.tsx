@@ -11,7 +11,7 @@ export async function getTransactions(
 ): Promise<Transaction[]> {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_NEST_API_URL}/bank-accounts/${bankAccountId}/transactions`,
-    {
+        {
       next: {
         revalidate: 10,
         tags: [`bank-accounts/${bankAccountId}`],
@@ -33,6 +33,9 @@ export async function BankAccountDashboardPage({
   const perPage = parseInt(searchParams.per_page) || 10;
   
   const transactions = await getTransactions(params.bankAccountId);
+
+  // sempre tentar ao maximo reduzir o uso de JS no browser (paginas com use-client), apenas para renderizar o necessario.
+  // do contrario optar por opções do lado do servidor
   return (
     <Grid2 container spacing={2}>
       <Grid2 xs={12} lg={6}>
