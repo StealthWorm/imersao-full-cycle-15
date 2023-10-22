@@ -20,12 +20,12 @@ spec:
             - containerPort: 50051
           envFrom:
             - secretRef:
-                name: codepix-secret
+                name: codepix-secret #secret.yaml
 
           volumeMounts:
             - name: codepix-volume
               mountPath: /go/src/.env
-              subPath: .env
+              subPath: .env  #define que o .env vai ser um arquivo e não uma pasta
               
 
       volumes:
